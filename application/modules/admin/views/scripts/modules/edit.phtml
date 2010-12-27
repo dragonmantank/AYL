@@ -9,3 +9,9 @@
 </ul>
 
 <h2>Questions</h2>
+<ul>
+<?php foreach($this->module->Questions as $question): ?>
+    <li><a href="/admin/modules/editquestion/question/<?php echo $question->id; ?>"><?php echo $question->text; ?></a></li>
+<?php endforeach; ?>
+    <li><a href="/admin/modules/addquestion/mod/<?php echo $this->module->id;?>">Add New Question</a></li>
+</ul>

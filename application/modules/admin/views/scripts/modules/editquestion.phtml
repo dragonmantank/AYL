@@ -1,0 +1,12 @@
+<h1>Edit Question</h1>
+
+<?php echo $this->question->text; ?>
+
+<h2>Answers</h2>
+
+<ul>
+<?php foreach($this->question->Answers as $answer): ?>
+    <li><?php echo $answer->text; ?></li>
+<?php endforeach; ?>
+    <li><a href="/admin/modules/addanswer/question/<?php echo $this->question->id ?>">Add New Answer</a></li>
+</ul>

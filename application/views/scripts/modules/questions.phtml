@@ -1,0 +1,19 @@
+<?php
+$answers = array();
+foreach($this->question->Answers as $answer) {
+    $answers[$answer->value] = $answer->text;
+}
+?>
+
+<h1>Question</h1>
+
+<p>
+<?php echo $this->question->text; ?>
+</p>
+
+<h2>Answers</h2>
+<form method="post">
+    <?php echo $this->formRadio('answer', null, null, $answers); ?><br/>
+    <input type="submit" value="Answer">
+</form>
+

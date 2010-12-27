@@ -9,8 +9,30 @@ class ModulesController extends Zend_Controller_Action
 
         $_SESSION['module_id'] = $module->id;
         $_SESSION['page_number'] = 0;
+        $_SESSION['question_number'] = 1;
         
         $this->view->module = $module;
+    }
+
+    public function questionsAction()
+    {
+        $repo = new AYL_Repo_Module();
+        $module = $repo->find($_SESSION['module_id']);
+        $questions = $module->Questions;
+
+        $question = (isset($_SESSION['question_number']) ? $_SESSION['question_number'] : 1);
+
+        if($this->getRequest()->isPost()) {
+            $answer = $this->getRequest()->getPost('answer');
+            $question = ++$question;
+            if($question > count($questions)) {
+                $this->_helper->_redirector('index', 'index');
+            } else {
+                $_SESSION['question_number'] = $question;
+            }
+        }
+
+        $this->view->question = $questions->fetchOneBy('order', $question);
     }
 
     public function viewAction()
@@ -42,7 +64,7 @@ class ModulesController extends Zend_Controller_Action
 
         
         if($pageNum > count($module->Pages)) {
-            $this->_helper->_redirector('index', 'index');
+            $this->_helper->_redirector('questions', 'modules');
         }
         
         $_SESSION['page_number'] = $pageNum;
