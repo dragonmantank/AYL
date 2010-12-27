@@ -20,19 +20,28 @@ class ModulesController extends Zend_Controller_Action
         $module = $repo->find($_SESSION['module_id']);
         $questions = $module->Questions;
 
-        $question = (isset($_SESSION['question_number']) ? $_SESSION['question_number'] : 1);
+        $question_number = (isset($_SESSION['question_number']) ? $_SESSION['question_number'] : 1);
+        $question = $questions->fetchOneBy('order', $question_number);
 
         if($this->getRequest()->isPost()) {
-            $answer = $this->getRequest()->getPost('answer');
-            $question = ++$question;
-            if($question > count($questions)) {
+            $answerValue = $this->getRequest()->getPost('answer');
+            $answer = $question->Answers->fetchOneBy('value', $answerValue);
+
+            $user = Zend_Auth::getInstance()->getIdentity();
+
+            $question->answer($answer, $user->id);
+
+            $question_number = ++$question_number;
+            $question = $questions->fetchOneBy('order', $question_number);
+            
+            if($question_number > count($questions)) {
                 $this->_helper->_redirector('index', 'index');
             } else {
-                $_SESSION['question_number'] = $question;
+                $_SESSION['question_number'] = $question_number;
             }
         }
 
-        $this->view->question = $questions->fetchOneBy('order', $question);
+        $this->view->question = $question;
     }
 
     public function viewAction()

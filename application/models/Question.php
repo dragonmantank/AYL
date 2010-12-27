@@ -24,4 +24,13 @@ class Model_Question extends PhpORM_Entity
     protected $text;
     protected $correct_answer_id;
     protected $order;
+
+    public function answer(Model_Answer $answer, $user_id)
+    {
+        $user_answer = new Model_UserAnswer();
+        $user_answer->question_id = $this->id;
+        $user_answer->answer_id = $answer->id;
+        $user_answer->user_id = $user_id;
+        $user_answer->save();
+    }
 }
