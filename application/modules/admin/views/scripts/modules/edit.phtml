@@ -1,9 +1,37 @@
+<?php
+$this->pages->orderBy('order');
+?>
+
+<style>
+    /* #sortable { list-style-type: none; margin: 0; padding: 0; width: 60% } */
+    #sortable li:hover { background-color: #88AC0B; color: white;}
+    #sortable li { padding: 5px; cursor: move }
+    .ui-state-highlight { height: 1.5em; line-height: 1.2em}
+</style>
+
+<script>
+    $(document).ready(function() {
+        $('#sortable').sortable({
+            placeholder: 'ui-state-highlight',
+            update: function(event, ui) {
+                var order = $(this).sortable('toArray').toString();
+                $.ajax({
+                    data: {'pages': order},
+                    type: 'POST',
+                    url: '<?php echo $this->baseUrl(); ?>/admin/pages/updateorder/mod/<?php echo $this->module->id; ?>'
+                });
+            }
+        });
+        $('#sortable').disableSelection();
+    });
+</script>
+
 <h1>Edit Module '<?php echo $this->module->name; ?>'</h1>
 
 <h2>Lesson Plan</h2>
-<ul>
-<?php foreach($this->module->Pages as $page): ?>
-    <li><a href="/admin/modules/editpage/page/<?php echo $page->id; ?>"><?php echo $page->title; ?></a></li>
+<ul id="sortable">
+<?php foreach($this->pages as $page): ?>
+    <li id="page-<?php echo $page->id; ?>"><a href="/admin/modules/editpage/page/<?php echo $page->id; ?>"><?php echo $page->title; ?></a></li>
 <?php endforeach; ?>
     <li><a href="/admin/modules/addpage/mod/<?php echo $this->module->id;?>">Add New Page</a></li>
 </ul>

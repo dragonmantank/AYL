@@ -93,7 +93,9 @@ class Admin_ModulesController extends Zend_Controller_Action
     {
         $repo = new AYL_Repo_Module();
         $module = $repo->find($this->getRequest()->getParam('id'));
+        $pages = $module->Pages;
 
+        $this->view->pages = $pages;
         $this->view->module = $module;
     }
 
