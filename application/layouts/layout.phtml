@@ -1,8 +1,43 @@
-<div>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/auth/index/logout">Log Out</a></li>
-        <li><a href="/admin">Admin</a></li>
-    </ul>
-</div>
-<?php echo $this->layout()->content; ?>
+<html>
+    <head>
+        <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/css/refresh/Refresh.css" />
+        <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/css/ayl.css" />
+    </head>
+
+    <body>
+        <div id="wrap">
+            <div id="header">
+                <h1 id="logo-text">Security Crash Course</h1>
+            </div>
+        
+
+            <div id="menu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/auth/index/logout">Log Out</a></li>
+                    <li><a href="/admin">Admin</a></li>
+                </ul>
+            </div>
+
+            <div id="content-wrap">
+                <div id="sidebar">
+                    <h1>My Account</h1>
+                    <div class="left-box">
+                        <ul class="sidemenu">
+                            <li>New Modules</li>
+                            <li>Completed Modules</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="main">
+                    <?php echo $this->layout()->content; ?>
+                </div>
+            </div>
+
+            <div id="footer">
+                AYL &copy 2010 Chris Tankersley | Design by: <a href="http://www.styleshout.com/">styleshout</a>
+            </div>
+        </div>
+    </body>
+</html>
