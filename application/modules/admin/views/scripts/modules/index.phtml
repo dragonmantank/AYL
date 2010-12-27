@@ -1,0 +1,8 @@
+<h1>Modules Admin</h1>
+
+<ul>
+<?php foreach($this->modules as $module): ?>
+    <li><a href="/admin/modules/edit/id/<?php echo $module->id; ?>"><?php echo $module->name; ?></a></li>
+<?php endforeach; ?>
+    <li><a href="/admin/modules/add">Add New Module</a>
+</ul>
