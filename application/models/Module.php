@@ -22,4 +22,5 @@ class Model_Module extends PhpORM_Entity
     protected $id;
     protected $name;
     protected $description;
+    protected $date_available;
 }

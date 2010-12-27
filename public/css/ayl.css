@@ -2,3 +2,21 @@
     border-top: 1px solid #EFF0F1;
     text-align: right;
 }
+
+td {
+    font: normal normal normal 70%/1.5em Verdana, Tahoma, arial, sans-serif;
+    padding: 0px 5px 0px 5px;
+}
+
+tbody td {
+    border: 1px solid #EFF0F1;
+}
+
+th {
+    font: normal normal bold 12px/26px Verdana, Arial, Tahoma, sans-serif;
+    height: 26px;
+    background-color: #88AC0B;
+    color: white;
+    font-weight: bold;
+    margin: 0px;
+}
