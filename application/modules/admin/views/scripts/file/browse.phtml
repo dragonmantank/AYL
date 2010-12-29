@@ -22,8 +22,8 @@
 <?php if(count($this->files)): ?>
     <?php foreach($this->files as $file): ?>
         <?php if($file->getFilename() !== '.' && $file->getFilename() !== '..'): ?>
-            <a href="#" onClick="sendImage('<?php echo $this->baseUrl();?>/images/uploaded/<?php echo $file."<br>"; ?>')">
-                <img src="<?php echo $this->baseUrl();?>/images/uploaded/<?php echo $file."<br>"; ?>">
+            <a href="#" onClick="sendImage('<?php echo $this->baseUrl();?>/images/uploaded/<?php echo $file; ?>')">
+                <img src="<?php echo $this->baseUrl();?>/images/uploaded/<?php echo $file; ?>">
             </a>
         <?php endif; ?>
     <?php endforeach; ?>
