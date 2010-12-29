@@ -1,0 +1,4 @@
+You <?php echo ($this->scorer->passed() ? 'Passed' : 'Failed'); ?>.
+
+<p>
+You answered <?php echo $this->scorer->getCorrect(); ?> correctly and <?php echo $this->scorer->getIncorrect(); ?> incorrectly.

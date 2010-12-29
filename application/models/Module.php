@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @var id int
+ * @var name string
+ * @var description string
+ * @var date_availabe string
+ */
 class Model_Module extends PhpORM_Entity
 {
     protected $_allowDynamicAttributes = false;
@@ -23,4 +29,41 @@ class Model_Module extends PhpORM_Entity
     protected $name;
     protected $description;
     protected $date_available;
+
+    /**
+     * Clears out all of a user's answers for a module
+     * @param int $user_id
+     */
+    public function clearAnswers($user_id)
+    {
+        $repo = new AYL_Repo_UserAnswer();
+        foreach($this->Questions as $question) {
+            $answers = $repo->fetchOneBy(array(
+                'user_id' => $user_id,
+                'question_id' => $question->id,
+            ));
+            
+            $answers->delete();
+        }
+    }
+
+    /**
+     * Returns the status of a module against a user
+     * @param int $user_id
+     * @return bool
+     */
+    public function getStatus($user_id)
+    {
+        $repo = new AYL_Repo_TestStatus();
+        $status = $repo->fetchOneBy(array(
+            'module_id' => $this->id,
+            'user_id' => $user_id,
+        ));
+
+        if($status !== null) {
+            return $status->status;
+        }
+
+        return null;
+    }
 }

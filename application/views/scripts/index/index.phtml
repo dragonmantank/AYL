@@ -1,7 +1,30 @@
 <h1>Available Modules</h1>
 
+<table width="100%" cellspacing="0" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Module Name</th>
+            <th width="100px">Your Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->modules as $module): ?>
+        <tr>
+            <td><a href="/modules/load/id/<?php echo $module->id; ?>"><?php echo $module->name; ?></a></td>
+            <td align="center">
+                <?php
+                    if($module->getStatus($this->user_id) !== null) {
+                        echo ($module->getStatus($this->user_id) ? 'Passed' : 'Failed');
+                    } else {
+                        echo 'Not Taken';
+                    }
+                ?>
+            </td>
+        </tr>
+
+    <?php endforeach; ?>
+    </tbody>
+</table>
 <ul>
-<?php foreach($this->modules as $module): ?>
-    <li><a href="/modules/load/id/<?php echo $module->id; ?>"><?php echo $module->name; ?></a></li>
-<?php endforeach; ?>
+
 </ul>

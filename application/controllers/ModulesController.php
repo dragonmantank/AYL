@@ -2,11 +2,42 @@
 
 class ModulesController extends Zend_Controller_Action
 {
+    public function completedAction()
+    {
+        if($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+
+            if(isset($data['confirm']) && $data['confirm'] == 'Yes') {
+                $repo = new AYL_Repo_TestStatus();
+                $module_id = $this->getRequest()->getParam('id');
+                $user_id = Zend_Auth::getInstance()->getIdentity()->id;
+                $status = $repo->fetchOneBy(array(
+                    'module_id' => $module_id,
+                    'user_id' => $user_id,
+                ));
+
+                $status->delete();
+
+                $repo = new AYL_Repo_Module();
+                $module = $repo->find($module_id);
+                $module->clearAnswers($user_id);
+
+                $this->_forward('load');
+            } else {
+                $this->_helper->redirector('index', 'index');
+            }
+        }
+    }
+    
     public function loadAction()
     {
         $repo = new AYL_Repo_Module();
         $module = $repo->find($this->getRequest()->getParam('id'));
 
+        if($module->getStatus(Zend_Auth::getInstance()->getIdentity()->id) !== null) {
+            $this->_forward('completed');
+        }
+        
         $_SESSION['module_id'] = $module->id;
         $_SESSION['page_number'] = 0;
         $_SESSION['question_number'] = 1;
@@ -35,13 +66,44 @@ class ModulesController extends Zend_Controller_Action
             $question = $questions->fetchOneBy('order', $question_number);
             
             if($question_number > count($questions)) {
-                $this->_helper->_redirector('index', 'index');
+                $this->_helper->_redirector('score', 'modules');
             } else {
                 $_SESSION['question_number'] = $question_number;
             }
         }
 
         $this->view->question = $question;
+    }
+
+    public function scoreAction()
+    {
+        $user_answers = new PhpORM_Collection();
+
+        $repo = new AYL_Repo_Question();
+        $arepo = new AYL_Repo_UserAnswer();
+
+        $questions = $repo->fetchAllBy('module_id', $_SESSION['module_id']);
+
+        foreach($questions as $question) {
+            $answer = $arepo->fetchOneBy(array(
+                'question_id' => $question->id,
+                'user_id' => Zend_Auth::getInstance()->getIdentity()->id,
+            ));
+
+            $user_answers->append($answer);
+        }
+
+        $scorer = new AYL_TestScorer($user_answers);
+        $scorer->score();
+
+        $this->view->scorer = $scorer;
+
+        $testStatus = new Model_TestStatus(array(
+            'module_id' => $_SESSION['module_id'],
+            'user_id' => Zend_Auth::getInstance()->getIdentity()->id,
+            'status' => $scorer->passed(),
+        ));
+        $testStatus->save();
     }
 
     public function viewAction()
