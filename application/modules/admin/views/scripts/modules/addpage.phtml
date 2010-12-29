@@ -6,8 +6,10 @@
 		toolbar:
 		[
 			['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
-			['UIColor']
-		]
+			['UIColor', 'ImageButton']
+		],
+                filebrowserBrowseUrl:'<?php echo $this->baseUrl(); ?>/admin/file/browse',
+                filebrowserUploadUrl:'<?php echo $this->baseUrl(); ?>/admin/file/upload',
 	};
 
 	// Initialize the editor.
