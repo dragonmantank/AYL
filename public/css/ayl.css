@@ -19,4 +19,11 @@ th {
     color: white;
     font-weight: bold;
     margin: 0px;
+    padding: 0px 5px 0px 5px;
+}
+
+td.fake-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -116,6 +116,10 @@ abstract class PhpORM_Repository
         $dao = $this->getDao();
         $result = $dao->fetchOneBy($key, $value);
 
+        if($result == null) {
+            return null;
+        }
+        
         return new $this->_entityObjectName($result);
     }
 

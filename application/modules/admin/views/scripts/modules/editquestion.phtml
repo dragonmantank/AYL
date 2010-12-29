@@ -1,12 +1,40 @@
+<script>
+    function setCorrectAnswer(id) {
+        $.ajax({
+            data: {'answer': id},
+            type: 'POST',
+            url: '<?php echo $this->baseUrl(); ?>/admin/questions/setcorrect/question/<?php echo $this->question->id; ?>',
+            success: function(data, status, req) {
+                window.location.reload();
+            }
+        });
+    }
+</script>
+
 <h1>Edit Question</h1>
 
 <?php echo $this->question->text; ?>
 
-<h2>Answers</h2>
-
-<ul>
-<?php foreach($this->question->Answers as $answer): ?>
-    <li><?php echo $answer->text; ?></li>
-<?php endforeach; ?>
-    <li><a href="/admin/modules/addanswer/question/<?php echo $this->question->id ?>">Add New Answer</a></li>
-</ul>
+<table cellspacing="0" cellpadding="5" width="100%">
+    <thead>
+        <tr>
+            <th>Answer</th>
+            <th width="100px">Is Correct?</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->question->Answers as $answer): ?>
+        <tr>
+            <td><?php echo $answer->text; ?></td>
+            <td onClick="setCorrectAnswer(<?php echo $answer->id; ?>)" class="fake-link" align="center">
+                <?php echo ($this->question->isCorrect($answer) ? 'Yes' : 'No'); ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2" align="right"><a href="<?php echo $this->baseUrl(); ?>/admin/modules/addanswer/question/<?php echo $this->question->id ?>">Add New Answer</a></td>
+        </tr>
+    </tfoot>
+</table>
