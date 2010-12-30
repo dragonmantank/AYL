@@ -53,7 +53,10 @@ class Admin_ModulesController extends Zend_Controller_Action
             if($form->isValid($this->_request->getPost())) {
                 $page = new Model_Page($form->getValues());
                 try {
-                    $page->module_id = $this->getRequest()->getParam('mod');
+                    $repo = new AYL_Repo_Module();
+                    $module = $repo->find($this->getRequest()->getParam('mod'));
+                    $page->module_id = $module->id;
+                    $page->order = (count($module->Pages)+1);
                     $page->save();
                     $this->_helper->redirector->gotoUrl('/admin/modules/edit/id/'.$this->getRequest()->getParam('mod'));
                 } catch(Exception $e) {
