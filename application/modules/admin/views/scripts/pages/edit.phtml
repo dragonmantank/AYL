@@ -3,8 +3,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
        var config = {
-		toolbar:
-		[
+		toolbar: [
                     ['Source','-','Save','NewPage','Preview','-','Templates'],
                     ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
                     ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
@@ -20,7 +19,7 @@
                     ['Styles','Format','Font','FontSize'],
                     ['TextColor','BGColor'],
                     ['Maximize', 'ShowBlocks','-','About']
-		],
+                ],
                 filebrowserBrowseUrl:'<?php echo $this->baseUrl(); ?>/admin/file/browse',
                 filebrowserUploadUrl:'<?php echo $this->baseUrl(); ?>/admin/file/upload',
 	};
@@ -32,7 +31,7 @@
     });
 </script>
 
-<h1>Create New Page</h1>
+<h1>Edit '<?php echo $this->page->title; ?>'</h1>
 
 <div>
     <?php echo $this->message; ?>

@@ -66,4 +66,23 @@ class Model_Module extends PhpORM_Entity
 
         return null;
     }
+
+    /**
+     * Pulls out all of the pages and resets the orders
+     * Since the slide program needs to make sure to have sequential pages,
+     * this makes sure that there are no missing pages.
+     */
+    public function reorderPages()
+    {
+        $repo = new AYL_Repo_Page();
+        $pages = $repo->fetchAll('module_id', $this->id);
+        $pages->orderBy('order');
+
+        $order = 1;
+        foreach($pages as $page) {
+            $page->order = $order;
+            $page->save();
+            $order++;
+        }
+    }
 }
