@@ -102,20 +102,14 @@ class Admin_ModulesController extends Zend_Controller_Action
 
     public function editAction()
     {
+        $form = new Admin_Form_AddQuestion();
         $repo = new AYL_Repo_Module();
         $module = $repo->find($this->getRequest()->getParam('id'));
         $pages = $module->Pages;
 
         $this->view->pages = $pages;
         $this->view->module = $module;
-    }
-
-    public function editquestionAction()
-    {
-        $repo = new AYL_Repo_Question();
-        $question = $repo->find($this->getRequest()->getParam('question'));
-
-        $this->view->question = $question;
+        $this->view->form = $form;
     }
 
     public function indexAction()
