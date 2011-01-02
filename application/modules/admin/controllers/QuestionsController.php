@@ -19,7 +19,7 @@ class Admin_QuestionsController extends Zend_Controller_Action
 
         $form->getElement('text')->setValue($question->text);
         $form->getElement('submit')->setLabel('Save Question');
-        
+
         $this->view->form = $form;
         $this->view->question = $question;
     }

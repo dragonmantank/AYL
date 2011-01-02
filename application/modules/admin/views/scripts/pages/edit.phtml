@@ -31,6 +31,13 @@
     });
 </script>
 
+<div id="breadcrumb">
+    <a href="<?php echo $this->baseUrl(); ?>/admin/">Admin Home</a> &gt;
+    <a href="<?php echo $this->baseUrl(); ?>/admin/modules">Modules</a> &gt;
+    <a href="<?php echo $this->baseUrl(); ?>/admin/modules/edit/id/<?php echo $this->page->module_id; ?>">Edit Module</a> &gt;
+    Edit Page
+</div>
+
 <h1>Edit '<?php echo $this->page->title; ?>'</h1>
 
 <div>

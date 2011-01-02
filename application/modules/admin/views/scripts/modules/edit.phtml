@@ -26,6 +26,12 @@ $this->pages->orderBy('order');
     });
 </script>
 
+<div id="breadcrumb">
+    <a href="<?php echo $this->baseUrl(); ?>/admin/">Admin Home</a> &gt;
+    <a href="<?php echo $this->baseUrl(); ?>/admin/modules">Modules</a> &gt;
+    Edit Module
+</div>
+
 <h1>Edit Module '<?php echo $this->module->name; ?>'</h1>
 
 <h2>Module Settings</h2>
@@ -82,10 +88,13 @@ $this->pages->orderBy('order');
     </thead>
     <tbody>
         <?php foreach($this->module->Questions as $question): ?>
-            <td><a href="<?php echo $this->baseUrl(); ?>/admin/questions/edit/question/<?php echo $question->id; ?>"><?php echo $question->text; ?></a></td>
-            <td align="center">
-                <a href="<?php echo $this->baseUrl(); ?>/admin/questions/edit/question/<?php echo $question->id; ?>">Edit</a> |
-                <a href="<?php echo $this->baseUrl(); ?>/admin/questions/delete/question/<?php echo $question->id; ?>">Delete</a></td>
+            <tr>
+                <td><a href="<?php echo $this->baseUrl(); ?>/admin/questions/edit/question/<?php echo $question->id; ?>"><?php echo $question->text; ?></a></td>
+                <td align="center">
+                    <a href="<?php echo $this->baseUrl(); ?>/admin/questions/edit/question/<?php echo $question->id; ?>">Edit</a> |
+                    <a href="<?php echo $this->baseUrl(); ?>/admin/questions/delete/question/<?php echo $question->id; ?>">Delete</a>
+                </td>
+            </tr>
         <?php endforeach; ?>
     </tbody>
     <tfoot>

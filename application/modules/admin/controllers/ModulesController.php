@@ -53,13 +53,14 @@ class Admin_ModulesController extends Zend_Controller_Action
     public function addpageAction()
     {
         $form = new Admin_Form_AddPage();
+        $module_id = $this->getRequest()->getParam('mod');
 
         if($this->_request->isPost()) {
             if($form->isValid($this->_request->getPost())) {
                 $page = new Model_Page($form->getValues());
                 try {
                     $repo = new AYL_Repo_Module();
-                    $module = $repo->find($this->getRequest()->getParam('mod'));
+                    $module = $repo->find($module_id);
                     $page->module_id = $module->id;
                     $page->order = (count($module->Pages)+1);
                     $page->save();
@@ -72,23 +73,25 @@ class Admin_ModulesController extends Zend_Controller_Action
             }
         }
 
+        $this->view->module_id = $module_id;
         $this->view->form = $form;
     }
 
     public function addquestionAction()
     {
         $form = new Admin_Form_AddQuestion();
+        $module_id = $this->getRequest()->getParam('mod');
 
         if($this->_request->isPost()) {
             if($form->isValid($this->_request->getPost())) {
                 $question = new Model_Question($form->getValues());
                 try {
                     $repo = new AYL_Repo_Module();
-                    $module = $repo->find($this->getRequest()->getParam('mod'));
+                    $module = $repo->find($module_id);
                     $question->module_id = $module->id;
                     $question->order = (count($module->Questions) + 1);
                     $question->save();
-                    $this->_helper->redirector->gotoUrl('/admin/modules/editquestion/question/'.$question->id);
+                    $this->_helper->redirector->gotoUrl('/admin/questions/edit/question/'.$question->id);
                 } catch(Exception $e) {
                     $this->view->message = $e->getMessage();
                 }
@@ -97,6 +100,7 @@ class Admin_ModulesController extends Zend_Controller_Action
             }
         }
 
+        $this->view->module_id = $module_id;
         $this->view->form = $form;
     }
 
