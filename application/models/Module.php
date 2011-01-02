@@ -48,6 +48,28 @@ class Model_Module extends PhpORM_Entity
     }
 
     /**
+     * Removes a module, its pages, and questions
+     */
+    public function delete()
+    {
+        foreach($this->Pages as $page) {
+            $page->delete();
+        }
+
+        foreach($this->Questions as $question) {
+            $question->delete();
+        }
+
+        $repo = new AYL_Repo_TestStatus();
+        $statuses = $repo->fetchAllBy('module_id', $this->id);
+        foreach($statuses as $status) {
+            $status->delete();
+        }
+
+        parent::delete();
+    }
+
+    /**
      * Returns the status of a module against a user
      * @param int $user_id
      * @return bool

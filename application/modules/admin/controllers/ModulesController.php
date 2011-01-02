@@ -108,6 +108,23 @@ class Admin_ModulesController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
+    public function deleteAction()
+    {
+        $repo = new AYL_Repo_Module();
+        $module_id = $this->getRequest()->getParam('id');
+        $module = $repo->find($module_id);
+
+        if($this->getRequest()->isPost()) {
+            if($this->getRequest()->getParam('confirm')) {
+                $module->delete();
+            }
+
+            $this->_helper->redirector('index', 'modules', 'admin');
+        }
+
+        $this->view->module = $module;
+    }
+
     public function editAction()
     {
         $form = new Admin_Form_AddQuestion();

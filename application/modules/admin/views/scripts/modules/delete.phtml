@@ -1,0 +1,14 @@
+<div id="breadcrumb">
+    <a href="<?php echo $this->baseUrl(); ?>/admin/">Admin Home</a> &gt;
+    <a href="<?php echo $this->baseUrl(); ?>/admin/modules">Modules</a> &gt;
+    Delete Module
+</div>
+
+<h1>Delete '<?php echo $this->module->name; ?>'</h1>
+
+Are you sure you want to delete this module?
+
+<form method="post">
+    <input type="submit" id="confirm" value="Yes" name="confirm">
+    <input type="submit" id="cancel" value="No" name="cancel">
+</form>

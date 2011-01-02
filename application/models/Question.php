@@ -46,6 +46,12 @@ class Model_Question extends PhpORM_Entity
             $answer->delete();
         }
 
+        $repo = new AYL_Repo_UserAnswer();
+        $answers = $repo->fetchAllBy('question_id', $this->id);
+        foreach($answers as $answer) {
+            $answer->delete();
+        }
+
         parent::delete();
     }
 
