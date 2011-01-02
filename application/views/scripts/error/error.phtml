@@ -2,11 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Zend Framework Default Application</title>
+  <title>Are You Listening? :: Oops</title>
 </head>
 <body>
-  <h1>An error occurred</h1>
-  <h2><?php echo $this->message ?></h2>
+  <h1><?php echo $this->message ?></h1>
+
+  <div style="width: 640px; margin-left: auto; margin-right: auto; text-align: right">
+    <img src="<?php echo $this->baseUrl(); ?>/images/zelda_error.jpg" align="center" /> <br/>
+    <a target="_new" href="http://www.flickr.com/photos/random_j/303093542/sizes/z/in/photostream/">Source</a>
+  </div>
 
   <?php if (isset($this->exception)): ?>
 
