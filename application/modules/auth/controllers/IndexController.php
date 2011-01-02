@@ -8,8 +8,10 @@ class Auth_IndexController extends Zend_Controller_Action {
 
         if ($this->_request->isPost()) {
             if ($form->isValid($this->_request->getPost())) {
+                $config = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getOptions();
+
                 $username = $form->getValue('username');
-                $password = hash('sha384', $form->getValue('password') . 'MySecretHash');
+                $password = hash($config['passwords']['hash'], $form->getValue('password') . $config['passwords']['salt']);
 
                 $db = $this->getInvokeArg('bootstrap')->getResource('db');
                 $authAdapter = new Zend_Auth_Adapter_DbTable($db);

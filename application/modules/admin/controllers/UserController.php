@@ -8,8 +8,9 @@ class Admin_UserController extends Zend_Controller_Action
 
         if($this->_request->isPost()) {
             if($form->isValid($this->_request->getPost())) {
+                $config = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getOptions();
                 $data = $form->getValues();
-                $data['password'] = hash('sha384', $data['password']. 'MySecretHash');
+                $data['password'] = hash($config['passwords']['hash'], $data['password'].$config['passwords']['salt']);
 
                 $user = new Model_User($data);
                 try {
