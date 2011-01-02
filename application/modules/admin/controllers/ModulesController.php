@@ -8,8 +8,13 @@ class Admin_ModulesController extends Zend_Controller_Action
 
         if($this->_request->isPost()) {
             if($form->isValid($this->_request->getPost())) {
-                $module = new Model_Module($form->getValues());
+                $data = $form->getValues();
                 try {
+                    $module = new Model_Module();
+                    $module->name = $data['name'];
+                    $module->description = $data['description'];
+                    $date = new DateTime($data['date_available']);
+                    $module->date_available = $date->format('Y-m-d h:i:s');
                     $module->save();
                     $this->_helper->redirector('index');
                 } catch(Exception $e) {

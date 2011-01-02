@@ -4,17 +4,17 @@ $this->pages->orderBy('order');
 
 <style>
     /* #sortable { list-style-type: none; margin: 0; padding: 0; width: 60% } */
-    #sortable li:hover { background-color: #88AC0B; color: white;}
-    #sortable li { padding: 5px; cursor: move }
+    #sortable tbody tr:hover { background-color: #88AC0B; color: white;}
+    #sortable tbody tr { padding: 5px; cursor: move }
     .ui-state-highlight { height: 1.5em; line-height: 1.2em}
 </style>
 
 <script>
     $(document).ready(function() {
-        $('#sortable').sortable({
+        $('#sortable tbody').sortable({
             placeholder: 'ui-state-highlight',
             update: function(event, ui) {
-                var order = $(this).sortable('toArray').toString();
+                var order = $('#sortable tbody').sortable('toArray').toString();
                 $.ajax({
                     data: {'pages': order},
                     type: 'POST',
@@ -22,24 +22,70 @@ $this->pages->orderBy('order');
                 });
             }
         });
-        $('#sortable').disableSelection();
+        $('#sortable tbody').disableSelection();
     });
 </script>
 
 <h1>Edit Module '<?php echo $this->module->name; ?>'</h1>
 
+<h2>Module Settings</h2>
+<table cellspacing="0" cellpadding="5" width="100%">
+    <tbody>
+        <tr>
+            <th width="125px">Name:</th>
+            <td><?php echo $this->module->name; ?></td>
+        </tr>
+        <tr>
+            <th>Date Available:</th>
+            <td><?php echo date('Y-m-d', strtotime($this->module->date_available)); ?></td>
+        </tr>
+        <tr>
+            <th>Description:</th>
+            <td><?php echo $this->module->description; ?></td>
+        </tr>
+    </tbody>
+</table>
+
 <h2>Lesson Plan</h2>
-<ul id="sortable">
-<?php foreach($this->pages as $page): ?>
-    <li id="page-<?php echo $page->id; ?>"><a href="/admin/modules/editpage/page/<?php echo $page->id; ?>"><?php echo $page->title; ?></a></li>
-<?php endforeach; ?>
-    <li><a href="/admin/modules/addpage/mod/<?php echo $this->module->id;?>">Add New Page</a></li>
-</ul>
+<table id="sortable" cellspacing="0" cellpadding="5" width="100%">
+    <thead>
+        <tr>
+            <th>Page Name</th>
+            <th width="100px">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->pages as $page): ?>
+        <tr id="page-<?php echo $page->id; ?>">
+            <td><a href="<?php echo $this->baseUrl(); ?>/admin/modules/editpage/page/<?php echo $page->id; ?>"><?php echo $page->title; ?></a></li>
+            <td align="center">Edit | Delete</td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2" align="right"><a href="<?php echo $this->baseUrl(); ?>/admin/modules/addpage/mod/<?php echo $this->module->id;?>">Add New Page</a></td>
+        </tr>
+    </tfoot>
+</table>
 
 <h2>Questions</h2>
-<ul>
-<?php foreach($this->module->Questions as $question): ?>
-    <li><a href="/admin/modules/editquestion/question/<?php echo $question->id; ?>"><?php echo $question->text; ?></a></li>
-<?php endforeach; ?>
-    <li><a href="/admin/modules/addquestion/mod/<?php echo $this->module->id;?>">Add New Question</a></li>
-</ul>
+<table cellspacing="0" cellpadding="5" width="100%">
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th width="100px">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->module->Questions as $question): ?>
+            <td><a href="<?php echo $this->baseUrl(); ?>/admin/modules/editquestion/question/<?php echo $question->id; ?>"><?php echo $question->text; ?></a></td>
+            <td align="center">Edit | Delete</td>
+        <?php endforeach; ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2" align="right"><a href="<?php echo $this->baseUrl(); ?>/admin/modules/addquestion/mod/<?php echo $this->module->id;?>">Add New Question</a></td>
+        </tr>
+    </tfoot>
+</table>

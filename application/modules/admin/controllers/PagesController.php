@@ -8,6 +8,7 @@ class Admin_PagesController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(true);
 
         $pageList = explode(',', $this->getRequest()->getPost('pages'));
+
         $repo = new AYL_Repo_Page();
         $pages = $repo->fetchAllBy('module_id', $this->getRequest()->getParam('mod'));
 
