@@ -2,6 +2,26 @@
 
 class Admin_QuestionsController extends Zend_Controller_Action
 {
+    public function deleteAction()
+    {
+        $repo = new AYL_Repo_Question();
+        $question_id = $this->getRequest()->getParam('question');
+        $question = $repo->find($question_id);
+
+        if($this->getRequest()->isPost()) {
+            if($this->getRequest()->getParam('confirm')) {
+                $modrepo = new AYL_Repo_Module();
+                $module = $modrepo->find($question->module_id);
+                $question->delete();
+                $module->reorderQuestions();
+            }
+
+            $this->_helper->redirector('edit', 'modules', 'admin', array('id'=> $question->module_id));
+        }
+
+        $this->view->question = $question;
+    }
+
     public function editAction()
     {
         $form = new Admin_Form_AddQuestion();

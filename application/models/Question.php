@@ -40,6 +40,15 @@ class Model_Question extends PhpORM_Entity
         $user_answer->save();
     }
 
+    public function delete()
+    {
+        foreach($this->Answers as $answer) {
+            $answer->delete();
+        }
+
+        parent::delete();
+    }
+
     public function isCorrect(Model_Answer $answer)
     {
         if($this->CorrectAnswer !== null) {

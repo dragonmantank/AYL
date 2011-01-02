@@ -30,15 +30,18 @@ class Admin_ModulesController extends Zend_Controller_Action
 
     public function addanswerAction()
     {
+        $repo = new AYL_Repo_Question();
         $form = new Admin_Form_AddAnswer();
+        $question_id = $this->getRequest()->getParam('question');
+        $question = $repo->find($question_id);
 
         if($this->_request->isPost()) {
             if($form->isValid($this->_request->getPost())) {
                 $answer = new Model_Answer($form->getValues());
                 try {
-                    $answer->question_id = $this->getRequest()->getParam('question');
+                    $answer->question_id = $question_id;
                     $answer->save();
-                    $this->_helper->redirector->gotoUrl('/admin/modules/editquestion/question/'.$answer->question_id);
+                    $this->_helper->redirector->gotoUrl('/admin/questions/edit/question/'.$answer->question_id);
                 } catch(Exception $e) {
                     $this->view->message = $e->getMessage();
                 }
@@ -47,6 +50,7 @@ class Admin_ModulesController extends Zend_Controller_Action
             }
         }
 
+        $this->view->question = $question;
         $this->view->form = $form;
     }
 

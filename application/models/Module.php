@@ -85,4 +85,23 @@ class Model_Module extends PhpORM_Entity
             $order++;
         }
     }
+
+    /**
+     * Pulls out all of the questions and resets the orders
+     * Since the slide program needs to make sure to have sequential questions,
+     * this makes sure that there are no missing questions.
+     */
+    public function reorderQuestions()
+    {
+        $repo = new AYL_Repo_Question();
+        $questions = $repo->fetchAll('module_id', $this->id);
+        $questions->orderBy('order');
+
+        $order = 1;
+        foreach($questions as $questions) {
+            $questions->order = $order;
+            $questions->save();
+            $order++;
+        }
+    }
 }
