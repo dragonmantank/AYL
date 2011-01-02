@@ -1,17 +1,17 @@
 <h1>Modules Admin</h1>
 
-<table cellspacing="0">
+<table cellspacing="0" width="100%" cellpadding="5">
     <thead>
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Available</th>
+            <th width="100px">Available</th>
         </tr>
     </thead>
     <tbody>
     <?php foreach($this->modules as $module): ?>
         <tr>
-            <td><a href="/admin/modules/edit/id/<?php echo $module->id; ?>"><?php echo $module->name; ?></a></td>
+            <td><a href="<?php echo $this->baseUrl(); ?>/admin/modules/edit/id/<?php echo $module->id; ?>"><?php echo $module->name; ?></a></td>
             <td><?php echo $module->description; ?></td>
             <td><?php echo date('m-d-Y', strtotime($module->date_available)); ?></td>
         </tr>
@@ -19,7 +19,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="3" align="right"><a href="/admin/modules/add">Add New Module</a></td>
+            <td colspan="3" align="right"><a href="<?php echo $this->baseUrl(); ?>/admin/modules/add">Add New Module</a></td>
         </tr>
     </tfoot>
 </table>
