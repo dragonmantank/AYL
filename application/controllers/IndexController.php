@@ -10,5 +10,10 @@ class IndexController extends Zend_Controller_Action
         $this->view->user_id = Zend_Auth::getInstance()->getIdentity()->id;
         $this->view->modules = $modules;
     }
+
+    public function restrictedAction()
+    {
+        
+    }
 }
 

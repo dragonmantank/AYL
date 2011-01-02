@@ -17,5 +17,11 @@ class AYL_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
                         ->setDispatched(true);
             }
         }
+
+        if($module == 'admin' && !$auth->getIdentity()->admin)
+            $request->setModuleName('default')
+                    ->setControllerName('index')
+                    ->setActionName('restricted')
+                    ->setDispatched(true);
     }
 }
