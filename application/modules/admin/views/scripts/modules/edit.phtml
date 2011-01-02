@@ -57,8 +57,11 @@ $this->pages->orderBy('order');
     <tbody>
     <?php foreach($this->pages as $page): ?>
         <tr id="page-<?php echo $page->id; ?>">
-            <td><a href="<?php echo $this->baseUrl(); ?>/admin/modules/editpage/page/<?php echo $page->id; ?>"><?php echo $page->title; ?></a></li>
-            <td align="center">Edit | Delete</td>
+            <td><a href="<?php echo $this->baseUrl(); ?>/admin/pages/edit/page/<?php echo $page->id; ?>"><?php echo $page->title; ?></a></li>
+            <td align="center">
+                <a href="<?php echo $this->baseUrl(); ?>/admin/pages/edit/page/<?php echo $page->id; ?>">Edit</a> |
+                <a href="<?php echo $this->baseUrl(); ?>/admin/pages/delete/page/<?php echo $page->id; ?>">Delete</a>
+            </td>
         </tr>
     <?php endforeach; ?>
     </tbody>
