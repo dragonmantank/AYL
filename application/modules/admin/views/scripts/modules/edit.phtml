@@ -49,6 +49,10 @@ $this->pages->orderBy('order');
             <th>Description:</th>
             <td><?php echo $this->module->description; ?></td>
         </tr>
+        <tr>
+            <th>Status:</th>
+            <td><a href="<?php echo $this->baseUrl(); ?>/admin/modules/status/id/<?php echo $this->module->id;?>">View Completion Status</a></td>
+        </tr>
     </tbody>
 </table>
 

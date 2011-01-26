@@ -144,4 +144,16 @@ class Admin_ModulesController extends Zend_Controller_Action
 
         $this->view->modules = $modules;
     }
+
+    public function statusAction()
+    {
+        $modRepo = new AYL_Repo_Module();
+        $userRepo = new AYL_Repo_User();
+
+        $module = $modRepo->find($this->getRequest()->getParam('id'));
+        $users = $userRepo->fetchAll();
+
+        $this->view->module = $module;
+        $this->view->users = $users;
+    }
 }

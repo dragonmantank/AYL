@@ -1,0 +1,26 @@
+<h1>User Status for '<?php echo $this->module->name; ?>'</h1>
+
+<table cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th width="150px">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->users as $user): ?>
+        <tr>
+            <td><?php echo $user->real_name; ?></td>
+            <td align="center">
+                <?php
+                    if($this->module->getStatus($user->id) !== null) {
+                        echo ($this->module->getStatus($user->id) ? 'Passed' : 'Failed');
+                    } else {
+                        echo 'Not Taken';
+                    }
+                ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
